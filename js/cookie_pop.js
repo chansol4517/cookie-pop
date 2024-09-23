@@ -13,3 +13,24 @@ cookie : 사용자 브라우저에 물리적인 형태로 특정 데이터를 �
   쿠키 : nave=value 형식으로 저장, 쿠키 생성시 쿠키의 만료일을 설정 가능
   쿠키확인 : document.cookie
 */
+
+const [btnView, btnSet] = document.querySelectorAll("button");
+
+btnView.addEventListener("click", () => {
+	console.log(document.cookie);
+});
+
+btnSet.addEventListener("click", () => {
+	setCookie("today", "done", 5);
+});
+
+//쿠키 생성 함수
+function setCookie(name, value, sec) {
+	let now = new Date();
+	//현재 분값을 가져와서 인수로 전달된 분 시간정보를 더함
+	let duedate = now.getSeconds() + sec;
+	//바뀐 시간 정보값으로 시간객체정보를 변경
+	now.setSeconds(duedate);
+	//변경된 시간 정보값을 표준시로 변경해서 쿠키만료시간으로 설정
+	document.cookie = `${name}=${value}; path=/; expires=${now.toUTCString()}`;
+}
